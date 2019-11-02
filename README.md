@@ -47,30 +47,30 @@
 set of states R:= null
 stack of states U:= null
 bool b:=true
-while(I\R!=null and b) do
-	let s in I\R
-  visit s
-od
+while(I (not in R and not null) and b)
+    let s in I not in R
+    visit s
+
 if b then 
-	return "yes"
+    return "yes"
 else 
-	return "no" reverse(U)
+    return "no" reverse(U)
 fi
 
 procedure visit(state s)
-	push s,U
-  R:=R v {s}
-  repeat
-  	s':=top(U)
-    if Post(s') in R then
-        pop(U)
-        b:=b + (s' satisfies fi)
-    else
-        let s'' in Post(s')\R
-        push s'',U
-        R:=R + {s''}
-    fi
-  until((U=null) v ~b)
+    push s,U
+    R:=R v {s}
+    repeat
+        s':=top(U)
+        if Post(s') in R then
+            pop(U)
+            b:=b + (s' satisfies fi)
+        else
+            let s'' in Post(s')\R
+            push s'',U
+            R:=R + {s''}
+        fi
+      until((U=null) v ~b)
 endproc
 ```
 
