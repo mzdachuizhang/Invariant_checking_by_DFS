@@ -7,27 +7,33 @@ from typing import List, Set
 class State:
     s_name: str = None
     val_var: Set[str] = None
-    def __init__(self,s:str):
-        self.s_name,last= s.split(':')
+
+    def __init__(self, s: str):
+        self.s_name, last = s.split(':')
         if last is not None:
             self.val_var = set()
             for var in last.split(","):
                 self.val_var.add(var)
 
+
 class Transition:
     s1_name: str = None  # 迁移前的状态名
     act: str = None  # 动作
-    s2_name: str = None # 迁移后的状态名
-    def __init__(self,s:str):
-        self.s1_name,self.act,self.s2_name=s.split(' ')
+    s2_name: str = None  # 迁移后的状态名
+
+    def __init__(self, s: str):
+        self.s1_name, self.act, self.s2_name = s.split(' ')
+
 
 class Label:
     s_name: str = None
     AP: List[str] = None
-    def __init__(self,s:str):
+
+    def __init__(self, s: str):
         if s is not None:
             self.s_name = s[0]
             self.AP = s[1:]
+
 
 class TransitionSystem:
     """Transition System"""
@@ -47,7 +53,7 @@ class TransitionSystem:
                  l_: List[str] = None,
                  ):
         if s_ is not None:
-            self.states=list()
+            self.states = list()
             for s in s_:
                 state = State(s)
                 self.states.append(state)
@@ -55,7 +61,7 @@ class TransitionSystem:
         self.actions = act_ if act_ is not None else set()
 
         if trans_ is not None:
-            self.transitions=list()
+            self.transitions = list()
             for tran in trans_:
                 transition = Transition(tran)
                 self.transitions.append(transition)
