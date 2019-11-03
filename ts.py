@@ -15,6 +15,9 @@ class State:
             for var in last.split(","):
                 self.val_var.add(var)
 
+    def __str__(self):
+        return self.s_name + ":" + ','.join([val for val in self.val_var])
+
 
 class Transition:
     s1_name: str = None  # 迁移前的状态名
@@ -23,6 +26,9 @@ class Transition:
 
     def __init__(self, s: str):
         self.s1_name, self.act, self.s2_name = s.split(' ')
+
+    def __str__(self):
+        return self.s1_name+" -"+self.act+"-> "+self.s2_name
 
 
 class Label:
@@ -33,6 +39,9 @@ class Label:
         if s is not None:
             self.s_name = s[0]
             self.AP = s[1:]
+
+    def __str__(self):
+        return self.s_name+":"+','.join([val for val in self.AP])
 
 
 class TransitionSystem:
@@ -86,5 +95,10 @@ def read_ts_from_json(file_path: str) -> TransitionSystem:
 
 if __name__ == "__main__":
     ts = read_ts_from_json("ts_mutex.json")
-    print(ts)
+    print(ts.states[0])  # 一个状态
+    print(ts.actions[0])  # 一个动作
+    print(ts.transitions[0])  # 一个迁移
+    print(ts.initial_states[0])  # 一个初始状态
+    print(ts.atomic_propositions[0])  # 一个原子命题
+    print(ts.labels[0])  # 一个label function
     pass
