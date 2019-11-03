@@ -39,7 +39,7 @@
 当然，首先假设TS是有限的，仅需使用DFS或者BFS对TS构成的图进行遍历即可。
 
 
-
+### DFS 伪代码
 ``` python
 # Input: finite TS and condition fi
 # Output: yes(TS satisfies fi) or no + counterexample
@@ -73,6 +73,23 @@ procedure visit(state s)
       until((U=null) v ~b)
 endproc
 ```
+
+## 解决思路
+
+1. ts.json  ->  class TS，见```ts.py```文件.
+2. class TS  ->  class Graph，见```ts2gh.py```文件.
+3. phy.json  ->  class PHY，见```phy.py```文件.
+4. class Graph + class PHY  ->  dfs，见```dfs.py```文件.
+
+**样例输入**
+- ts_mutex.json
+- ts_deadlock.json
+- phy.json
+
+## 优点：
+
+1. 对于任意类型的TS数据，以标准json文件格式化作为输入，即可处理。格式见文档末。
+2. 条件condition支持在AP集合上的一元运算符not，以及二元运算符and与or，和括弧，括弧优先级覆盖。
 
 
 
