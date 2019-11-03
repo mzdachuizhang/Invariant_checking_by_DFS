@@ -101,4 +101,6 @@ if __name__ == "__main__":
     print(ts.initial_states[0])  # 一个初始状态
     print(ts.atomic_propositions[0])  # 一个原子命题
     print(ts.labels[0])  # 一个label function
+
+    print(len(ts.transitions))
     pass
