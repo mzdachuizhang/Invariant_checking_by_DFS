@@ -51,5 +51,5 @@ class Graph:
 if __name__ == "__main__":
     ts = read_ts_from_json("ts_mutex.json")
     g = Graph(ts)
-    print(g.get_label(g.initList[0]).AP)
+    print(g.find_neighers(g.initList[0]))
     pass

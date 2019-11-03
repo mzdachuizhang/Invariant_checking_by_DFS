@@ -6,11 +6,12 @@ from typing import List, Set
 
 def satisfy(gh: Graph, state: State):
     labels = gh.get_label(state).AP  # 由此获得状态state所需要满足的原子命题，即label
-    fi = ['c1']
-    if len(list(set(labels).difference(fi))) == 1:
-        return True
-    else:
+    fi = ['c1', 'w2']
+    #if len(list(set(labels).difference(fi))) == 1:
+    if labels == fi:
         return False
+    else:
+        return True
 
 
 def dfs(gh: Graph):
