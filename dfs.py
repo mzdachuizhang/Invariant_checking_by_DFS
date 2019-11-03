@@ -2,13 +2,14 @@
 from ts2gh import Graph
 from ts import Transition, State, Label, TransitionSystem, read_ts_from_json
 from typing import List, Set
+import random
+import json
 
 
 def satisfy(gh: Graph, state: State):
     labels = gh.get_label(state).AP  # 由此获得状态state所需要满足的原子命题，即label
-    fi = ['c1', 'w2']
-    #if len(list(set(labels).difference(fi))) == 1:
-    if labels == fi:
+
+    if len(list(set(c_phy).difference(labels))) == 0:
         return False
     else:
         return True
@@ -30,12 +31,14 @@ def dfs(gh: Graph):
                 post_s_ = gh.find_neighers(s_)  # post(s')
                 post_s_diff_rr = list(set(post_s_).difference(rr))  # post(s')/R
                 if len(post_s_diff_rr) == 0:
-                    uu.pop()  # pop U
                     b = b and satisfy(gh, s_)
+                    if b:
+                        uu.pop()  # pop U
                 else:
-                    for s__ in post_s_diff_rr:  # let s'':element of post(s')/R
-                        uu.append(s__)  # push s'' into stack U
-                        rr.add(s__)  # mark s'' as reachable
+                    i = random.randint(0, len(post_s_diff_rr) - 1)
+                    s__ = post_s_diff_rr[i]  # let s'':element of post(s')/R
+                    uu.append(s__)  # push s'' into stack U
+                    rr.add(s__)  # mark s'' as reachable
             pass
         diff = list(set(ii).difference(rr))  # 更新差集
     if b:
@@ -46,6 +49,10 @@ def dfs(gh: Graph):
 
 
 if __name__ == "__main__":
+    with open("phy.json", encoding='utf-8') as f:
+        data = json.load(f)
+    # 每一个状态都满足phy，c_phy是不满足phy的情况，我们的目标是找反例c_phy
+    c_phy = data["c_phy"]
     ts = read_ts_from_json("ts_mutex.json")
     g = Graph(ts)
     result = dfs(g)

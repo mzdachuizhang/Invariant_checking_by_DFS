@@ -47,7 +47,6 @@ class Graph:
         return self.vertexList[state]
 
 
-
 if __name__ == "__main__":
     ts = read_ts_from_json("ts_mutex.json")
     g = Graph(ts)
