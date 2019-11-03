@@ -43,11 +43,13 @@ class Graph:
                 neighers.append(edgeTuple[1])
         return neighers
 
+    def get_label(self, state: State):
+        return self.vertexList[state]
 
 
 
 if __name__ == "__main__":
     ts = read_ts_from_json("ts_mutex.json")
     g = Graph(ts)
-    print(g.initList)
+    print(g.get_label(g.initList[0]).AP)
     pass
