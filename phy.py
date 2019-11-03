@@ -6,6 +6,7 @@ class PHY:
     """
     PHY
     """
-    phy: List[]
+    phy: List[str] = None
     def __init__(self,
                  phy: List[str]):
+        pass
