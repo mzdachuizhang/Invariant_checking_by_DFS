@@ -28,7 +28,7 @@ def dfs(gh: Graph):
             rr.add(state)  # mark state as reachable
             while len(uu) and b:
                 s_ = uu[-1]  # s'=top(U) 取栈顶元素
-                post_s_ = gh.find_neighers(s_)  # post(s')
+                post_s_ = gh.find_neighbours(s_)  # post(s')
                 post_s_diff_rr = list(set(post_s_).difference(rr))  # post(s')/R
                 if len(post_s_diff_rr) == 0:
                     b = b and satisfy(gh, s_)

@@ -3,7 +3,7 @@ from ts import Transition, State, Label, TransitionSystem, read_ts_from_json
 
 
 class Graph:
-    vertexList: Dict[State, Label] = None  # 状态：Label 的一个字典
+    vertexList: Dict[State, Label] = None  # 状态：Label 的一个字典 key State: value Label
     edgesList: List[Tuple[State, State]] = None  # 边 [(s0,s1)....]
     initList: List[State] = None  # 初始状态
 
@@ -36,12 +36,12 @@ class Graph:
     def __str__(self):
         return ','.join([s1.s_name + "->" + s2.s_name for (s1, s2) in self.edgesList])
 
-    def find_neighers(self, state: State):
-        neighers = list()
+    def find_neighbours(self, state: State):
+        neighbours = list()
         for edgeTuple in self.edgesList:
             if edgeTuple[0] == state:
-                neighers.append(edgeTuple[1])
-        return neighers
+                neighbours.append(edgeTuple[1])
+        return neighbours
 
     def get_label(self, state: State):
         return self.vertexList[state]
@@ -50,5 +50,5 @@ class Graph:
 if __name__ == "__main__":
     ts = read_ts_from_json("ts_mutex.json")
     g = Graph(ts)
-    print(g.find_neighers(g.initList[0]))
+    print(g.find_neighbours(g.initList[0]))
     pass
