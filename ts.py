@@ -49,7 +49,7 @@ class TransitionSystem:
     states: List[State] = None
     actions: Set[str] = None
     transitions: List[Transition] = None
-    initial_states: List[str] = None
+    initial_states: List[State] = None
     atomic_propositions: Set[str] = None
     labels: List[Label] = None
 
@@ -75,7 +75,14 @@ class TransitionSystem:
                 transition = Transition(tran)
                 self.transitions.append(transition)
 
-        self.initial_states = is_ if is_ is not None else list()
+        if is_ is not None:
+            self.initial_states = list()
+            for iss in is_:
+                for state in self.states:
+                    if iss == state.s_name:
+                        self.initial_states.append(state)
+                pass
+
         self.atomic_propositions = ap_ if ap_ is not None else set()
         if l_ is not None:
             self.labels = list()
@@ -101,6 +108,6 @@ if __name__ == "__main__":
     print(ts.initial_states[0])  # 一个初始状态
     print(ts.atomic_propositions[0])  # 一个原子命题
     print(ts.labels[0])  # 一个label function
-
+    print(ts.initial_states)
     print(len(ts.transitions))
     pass
