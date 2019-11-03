@@ -33,8 +33,8 @@
 
 ## Example
 
-1. 临界资源（fi=~crit1 or ~crit2）
-2. 哲学家死锁（~wait0 or ~wait1 or ~wait2 or ~wait3 or ~wait4）
+1. 临界资源（not crit1 or not crit2）
+2. 哲学家死锁（not wait0 or not wait1 or not wait2 or not wait3 or not wait4）
 
 当然，首先假设TS是有限的，仅需使用DFS或者BFS对TS构成的图进行遍历即可。
 
