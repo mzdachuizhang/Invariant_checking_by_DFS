@@ -23,7 +23,7 @@
 	"s6 noncrit1 s3",
 	"s7 noncrit2 s1"],
   "I": ["s0"],
-  "AP": ["n2","crit2","noncrit2","n1","crit1","noncrit1","s0","s1","s2","s3","s4","s5","s6"],
+  "AP": ["n2","crit2","noncrit2","n1","crit1","noncrit1","s0","s1","s2","s3","s4","s5","s6", "s7"],
   "L": [["s0","n1","n2"],
 	["s1","w1","n2"],
 	["s2","c1","n2"],
