@@ -22,24 +22,25 @@ def dfs(gh: Graph):
     b = True
     diff: List[State] = list(set(ii).difference(rr))  # 从I中去除R
     while len(diff) and b:  # 如果集合diff不为空，且b保持正确
-        for state in diff:
-            # visit(state)
-            uu.append(state)  # push state into stack U
-            rr.add(state)  # mark state as reachable
-            while len(uu) and b:
-                s_ = uu[-1]  # s'=top(U) 取栈顶元素
-                post_s_ = gh.find_neighbours(s_)  # post(s')
-                post_s_diff_rr = list(set(post_s_).difference(rr))  # post(s')/R
-                if len(post_s_diff_rr) == 0:
-                    b = b and satisfy(gh, s_)
-                    if b:
-                        uu.pop()  # pop U
-                else:
-                    i = random.randint(0, len(post_s_diff_rr) - 1)
-                    s__ = post_s_diff_rr[i]  # let s'':element of post(s')/R
-                    uu.append(s__)  # push s'' into stack U
-                    rr.add(s__)  # mark s'' as reachable
-            pass
+        j = random.randint(0, len(diff)-1)
+        state = diff[j]
+        # visit(state)
+        uu.append(state)  # push state into stack U
+        rr.add(state)  # mark state as reachable
+        while len(uu) and b:
+            s_ = uu[-1]  # s'=top(U) 取栈顶元素
+            post_s_ = gh.find_neighbours(s_)  # post(s')
+            post_s_diff_rr = list(set(post_s_).difference(rr))  # post(s')/R
+            if len(post_s_diff_rr) == 0:
+                b = b and satisfy(gh, s_)
+                if b:
+                    uu.pop()  # pop U
+            else:
+                i = random.randint(0, len(post_s_diff_rr) - 1)
+                s__ = post_s_diff_rr[i]  # let s'':element of post(s')/R
+                uu.append(s__)  # push s'' into stack U
+                rr.add(s__)  # mark s'' as reachable
+        pass
         diff = list(set(ii).difference(rr))  # 更新差集
     if b:
         return "yes"
