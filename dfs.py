@@ -61,5 +61,13 @@ if __name__ == "__main__":
         print("yes")
     else:
         print("no")
+        counter_example = open("counter_example.txt", "w")  # 生成counterexample的txt文档
+        init = ts.initial_states[0].s_name    # 初始状态
         for state in result[1]:
             print(state.s_name)
+            if state.s_name == init:
+                counter_example.write(state.s_name)
+            else:
+                counter_example.write(" -> " + state.s_name)
+        counter_example.close()
+    f.close()
