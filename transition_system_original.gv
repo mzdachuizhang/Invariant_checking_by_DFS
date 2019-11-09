@@ -1,21 +1,21 @@
 // Transition System
 digraph {
 	s0 [label="s0
-<y=1,n2,n1>"]
+<y=1,n1,n2>"]
 	s1 [label="s1
-<y=1,n2,w1>"]
+<y=1,w1,n2>"]
 	s2 [label="s2
-<y=1,n1,w2>"]
+<w2,y=1,n1>"]
 	s3 [label="s3
-<y=0,c1,n2>"]
+<c1,n2,y=0>"]
 	s4 [label="s4
-<y=1,w1,w2>"]
+<w2,y=1,w1>"]
 	s5 [label="s5
-<c2,y=0,n1>"]
+<n1,c2,y=0>"]
 	s6 [label="s6
-<y=0,c1,w2>"]
+<w2,c1,y=0>"]
 	s7 [label="s7
-<c2,y=0,w1>"]
+<c2,w1,y=0>"]
 	s0 -> s1 [label=wait1]
 	s0 -> s2 [label=wait2]
 	s1 -> s3 [label=crit1]
