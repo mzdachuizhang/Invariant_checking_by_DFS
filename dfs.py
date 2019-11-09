@@ -1,6 +1,6 @@
 # -*- coding=utf8 -*-
 from ts2gh import Graph
-from ts import Transition, State, Label, TransitionSystem, read_ts_from_json
+from ts import Transition, State, Label, TransitionSystem, read_ts_from_json, out_ts_graph, out_ts_graph_origin
 from typing import List, Set
 import random
 import json
@@ -57,6 +57,8 @@ if __name__ == "__main__":
     ts = read_ts_from_json("ts_mutex_2.json")    # 没有信号量y
     g = Graph(ts)
     result = dfs(g)
+    # out_ts_graph_origin(ts, 'transition_system_original.gv')   # 有信号量时画这个图
+    out_ts_graph(result[1], ts, 'transition_system_counterexample.gv')   # 没有信号量时画这个图
     counter_example = open("counter_example.txt", "w")  # 生成counterexample的txt文档
     if result == "yes":
         counter_example.write("yes")

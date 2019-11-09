@@ -1,6 +1,7 @@
 # coding=utf-8
 import json
 from typing import List, Set
+from graphviz import Digraph
 
 
 # A transition system TS is a tuple (S, Act, ->, I, AP, L)
@@ -17,6 +18,9 @@ class State:
 
     def __str__(self):
         return self.s_name + ":" + ','.join([val for val in self.val_var])
+
+    def to_graph_use(self):
+        return self.s_name + "\n" + "<" + ",".join([str(v) for v in self.val_var]) + ">"
 
 
 class Transition:
@@ -98,6 +102,64 @@ def read_ts_from_json(file_path: str) -> TransitionSystem:
     with open(file_path, encoding='utf-8') as f:
         ok = json.load(f)
     return TransitionSystem(ok['S'], ok['Act'], ok['Trans'], ok['I'], ok['AP'], ok['L'])
+
+
+def out_ts_graph_origin(ts: TransitionSystem, filename: str) -> None:
+    """将Transition System有向图输出（正确的时候给出）
+    :param ts: 要输出的Transition System
+    :param filename: 文件类型(扩展名)
+    """
+    S: List[State] = ts.states  # 存所有状态
+    Trans: List[Transition] = ts.transitions  # 存所有转移关系
+
+    # 生成TS的GraphViz有向图
+    dot = Digraph(comment='Transition System', format='png')
+    for s in S:   # 生成节点 正常的
+        str_s = s.to_graph_use()
+        str_s_name = s.s_name
+        dot.node(name=str_s_name, label=str_s)
+    for t in Trans:  # 生成边(转移关系上的动作)
+        str_s1 = t.s1_name
+        str_act = str(t.act)
+        str_s2 = t.s2_name
+        dot.edge(str_s1, str_s2, label=str_act)
+    dot.render(filename, view=True)
+
+
+def out_ts_graph(false: List[State], ts: TransitionSystem, filename: str) -> None:
+    """将Transition System有向图输出
+    :param false: 错误状态的列表
+    :param ts: 要输出的Transition System
+    :param filename: 文件类型(扩展名)
+    """
+    S: List[State] = ts.states  # 存所有状态
+    Trans: List[Transition] = ts.transitions  # 存所有转移关系
+
+    # 生成TS的GraphViz有向图
+    dot = Digraph(comment='Transition System', format='png')
+    false_name: List[str] = list()
+    black_state = list(set(S) - set(false))    # 没有访问到的状态集合
+
+    for s in false:    # 标记出错的结点
+        false_name.append(s.s_name)
+    for s in false:  # 生成结点(状态) 标红的
+        str_s = s.to_graph_use()
+        str_s_name = s.s_name
+        dot.node(name=str_s_name, label=str_s, color='red')
+    for s in black_state:   # 生成节点 正常的
+        str_s = s.to_graph_use()
+        str_s_name = s.s_name
+        dot.node(name=str_s_name, label=str_s)
+    for t in Trans:  # 生成边(转移关系上的动作)
+        str_s1 = t.s1_name
+        str_act = str(t.act)
+        str_s2 = t.s2_name
+        if str_s1 in false_name and false_name[false_name.index(str_s1)+1] == str_s2:
+            dot.edge(str_s1, str_s2, label=str_act, color='red')
+            # false_name.remove(str_s1)    # 去掉已经用过的节点
+        else:
+            dot.edge(str_s1, str_s2, label=str_act)
+    dot.render(filename, view=True)
 
 
 if __name__ == "__main__":
