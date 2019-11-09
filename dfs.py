@@ -8,11 +8,10 @@ import json
 
 def satisfy(gh: Graph, state: State):
     labels = gh.get_label(state).AP  # 由此获得状态state所需要满足的原子命题，即label
-
-    if len(list(set(c_phy).difference(labels))) == 0:
-        return False
-    else:
-        return True
+    for c_phy in c_phy_list:  # todo
+        if len(list(set(c_phy).difference(labels))) == 0:
+            return False
+    return True
 
 
 def dfs(gh: Graph):
@@ -53,15 +52,18 @@ if __name__ == "__main__":
     with open("phy.json", encoding='utf-8') as f:
         data = json.load(f)
     # 每一个状态都满足phy，c_phy是不满足phy的情况，我们的目标是找反例c_phy
-    c_phy = data["c_phy"]
-    ts = read_ts_from_json("ts_mutex.json")
+    c_phy_list = data["c_phy"]
+    # ts = read_ts_from_json("ts_mutex.json")    # 有信号量y
+    ts = read_ts_from_json("ts_mutex_2.json")    # 没有信号量y
     g = Graph(ts)
     result = dfs(g)
+    counter_example = open("counter_example.txt", "w")  # 生成counterexample的txt文档
     if result == "yes":
+        counter_example.write("yes")
         print("yes")
     else:
         print("no")
-        counter_example = open("counter_example.txt", "w")  # 生成counterexample的txt文档
+        counter_example.write("no\n")
         init = ts.initial_states[0].s_name    # 初始状态
         for state in result[1]:
             print(state.s_name)
