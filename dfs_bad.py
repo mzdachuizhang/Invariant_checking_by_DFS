@@ -48,11 +48,13 @@ def dfs(gh: Graph):
     pass
 
 
-if __name__ == "__main__":
-    with open("c_phy.json", encoding='utf-8') as f:
-        data = json.load(f)
+with open("c_phy.json", encoding='utf-8') as f:
+    data = json.load(f)
     # 每一个状态都满足phy，c_phy是不满足phy的情况，我们的目标是找反例c_phy
     c_phy_list = data["c_phy"]
+
+if __name__ == "__main__":
+
     # ts = read_ts_from_json("ts_mutex.json")    # 有信号量y
     ts = read_ts_from_json("ts_mutex_2.json")    # 没有信号量y
     g = Graph(ts)

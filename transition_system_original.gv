@@ -1,0 +1,33 @@
+// Transition System
+digraph {
+	s0 [label="s0
+<y=1,n2,n1>"]
+	s1 [label="s1
+<y=1,n2,w1>"]
+	s2 [label="s2
+<y=1,n1,w2>"]
+	s3 [label="s3
+<y=0,c1,n2>"]
+	s4 [label="s4
+<y=1,w1,w2>"]
+	s5 [label="s5
+<c2,y=0,n1>"]
+	s6 [label="s6
+<y=0,c1,w2>"]
+	s7 [label="s7
+<c2,y=0,w1>"]
+	s0 -> s1 [label=wait1]
+	s0 -> s2 [label=wait2]
+	s1 -> s3 [label=crit1]
+	s1 -> s4 [label=wait2]
+	s2 -> s4 [label=wait1]
+	s2 -> s5 [label=crit1]
+	s3 -> s0 [label=release1]
+	s3 -> s6 [label=wait2]
+	s4 -> s6 [label=crit1]
+	s4 -> s7 [label=crit2]
+	s5 -> s0 [label=release2]
+	s5 -> s7 [label=wait1]
+	s6 -> s2 [label=release1]
+	s7 -> s1 [label=release2]
+}
