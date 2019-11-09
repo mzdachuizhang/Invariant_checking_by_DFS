@@ -49,7 +49,7 @@ def dfs(gh: Graph):
 
 
 if __name__ == "__main__":
-    with open("phy.json", encoding='utf-8') as f:
+    with open("c_phy.json", encoding='utf-8') as f:
         data = json.load(f)
     # 每一个状态都满足phy，c_phy是不满足phy的情况，我们的目标是找反例c_phy
     c_phy_list = data["c_phy"]
