@@ -1,6 +1,20 @@
 # Invariant_checking_by_DFS
 
+## 使用方式
+> git clone https://github.com/mzdachuizhang/Invariant_checking_by_DFS.git
 
+### 1.配置文件
+- c_phy.json
+- ts_mutex.json
+- ts_mutex.json
+
+### 2. 可运行文件
+- dfs_good.py
+- dfs_bad.py
+
+### 3. 运行环境
+- python3.7
+- pipenv2018.11.26
 
 ## Safety properties
 
@@ -92,11 +106,18 @@ endproc
 2. 条件condition支持在AP集合上的一元运算符not，以及二元运算符and与or，和括弧，括弧优先级覆盖。
 
 ## FAQ:
-1. 为什么没有赋值符号？
-> 我们隐含了赋值，在我们的例子里每个状态都包含都两个变量（进程1，进程2），我们直接给出每个变量在该状态下的赋值
-2. 你的程序是通用的吗？
-> 在解决safety properties的两类典型问题时，是通用的。其他问题需要指定类型，从这个角度来说是并不通用。
-3. 
+1. 为什么仅选择TS结构作为输入？
+>首先因为Invariant的定义本身就要求了TS结构；此外，只要是能转成finite TS的其他类型的结构，按照规范，都是可以处理的，但不属于本项目范畴。
+2. 程序是否具有通用性？
+>仅适用于互斥性质的问题，通用性有待改进。还有红绿灯类的问题也可以使用我们的程序。
+3. 条件Φ是如何指定的？
+>Φ的定义要求，TS中的每个状态都能满足它。我们的实现，通过在c_phy.json文件中定义Φ的非，如定义：
+{ “c_phy”:[[“<cond>”, “<cond>”], [“<cond>”, “<cond>”],...]}
+由createJsonPhy.py自动创建c_phy.json，所有的进程两两不能同时占用临界区资源，
+默认进程数为2，[[“c1”, “c2”]]
+若修改进程数为3，则有[[“c1”, “c2”], [“c1”, “c3”], [“c2”, “c3”]]，任意一个状态节点都不得违反其中之一组。关键代码为函数satisfy()中的条件判断，len(list(set(c_phy).difference(labels))) == 0
+
+
 
 
 
